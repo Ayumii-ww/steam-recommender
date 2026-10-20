@@ -1,0 +1,14 @@
+polars>=1.0
+pandas
+pyarrow
+numpy
+scipy
+scikit-learn
+implicit
+torch
+matplotlib
+seaborn
+tqdm
+kaggle
+jupyter
+ipykernel

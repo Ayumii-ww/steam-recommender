@@ -1,0 +1,19 @@
+# data & models (too big for GitHub)
+data/raw/*
+data/processed/*
+models/*
+!**/.gitkeep
+
+# secrets
+kaggle.json
+.env
+
+# python / jupyter
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# os / editor
+.DS_Store
+.vscode/
