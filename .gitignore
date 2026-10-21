@@ -17,3 +17,6 @@ __pycache__/
 # os / editor
 .DS_Store
 .vscode/
+
+# claude code instructions (local only)
+CLAUDE.md
