@@ -20,3 +20,6 @@ __pycache__/
 
 # claude code instructions (local only)
 CLAUDE.md
+
+# R
+.Rhistory
