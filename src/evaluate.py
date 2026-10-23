@@ -25,8 +25,9 @@ import numpy as np
 import polars as pl
 import scipy.sparse as sp
 
-DATA = Path("data/processed")
-RESULTS = Path("results")
+ROOT = Path(__file__).resolve().parents[1]  # project folder, wherever the script is run from
+DATA = ROOT / "data" / "processed"
+RESULTS = ROOT / "results"
 K = 10
 BATCH_SIZE = 2048  # users scored at once: 2048 x 35k games x 4 bytes = ~290 MB
 
