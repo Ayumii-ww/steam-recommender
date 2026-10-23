@@ -19,7 +19,8 @@ from pathlib import Path
 
 import polars as pl
 
-DATA = Path("data/processed")
+ROOT = Path(__file__).resolve().parents[1]  # project folder, wherever the script is run from
+DATA = ROOT / "data" / "processed"
 MIN_USER_REVIEWS = 2   # minimum to have 1 review to learn from + 1 to test on
 MIN_GAME_REVIEWS = 5   # games with fewer reviews can't be learned from who reviewed them
 CORE_USER_REVIEWS = 5  # users with this many reviews also get a validation review
