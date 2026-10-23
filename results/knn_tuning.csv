@@ -1,0 +1,11 @@
+model,k,weighting,similarity,recall@10,ndcg@10,fit_seconds
+item_knn_cosine_log_hours_k400,400,log_hours,cosine,0.09973,0.05416558191644056,10.3
+item_knn_cosine_log_hours_k200,200,log_hours,cosine,0.09866,0.053679952883531515,9.0
+item_knn_cosine_log_hours_k100,100,log_hours,cosine,0.09739,0.05311177382494985,9.5
+item_knn_cosine_log_hours_k50,50,log_hours,cosine,0.09669,0.052790262372598776,9.9
+item_knn_cosine_binary_k400,400,binary,cosine,0.09287,0.05024412718223855,10.6
+item_knn_cosine_binary_k200,200,binary,cosine,0.09209,0.04963039411753457,9.8
+item_knn_cosine_binary_k100,100,binary,cosine,0.09094,0.0490530330608144,9.2
+item_knn_cosine_binary_k50,50,binary,cosine,0.09011,0.048872541507172636,8.4
+item_knn_bm25_log_hours_k200,200,log_hours,bm25,0.08657,0.046896295728168606,9.7
+item_knn_bm25_binary_k200,200,binary,bm25,0.05798,0.03181035817322135,9.4
