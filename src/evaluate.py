@@ -61,7 +61,10 @@ def load_eval_data(stage: str) -> EvalData:
     n_items = int(df["item_idx"].max()) + 1
 
     learn_splits = ["train"] if stage == "val" else ["train", "val"]
-    train = df.filter(pl.col("split").is_in(learn_splits))
+    # Only the columns models learn from; text columns like split/user_group would cost ~1 GB here
+    train = df.filter(pl.col("split").is_in(learn_splits)).select(
+        "user_idx", "item_idx", "date", "is_recommended", "hours"
+    )
     targets = df.filter(pl.col("split") == stage).select("user_idx", "item_idx", "is_recommended", "user_group")
     del df
 
