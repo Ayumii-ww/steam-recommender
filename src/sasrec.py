@@ -195,6 +195,13 @@ class SASRecModel:
         path.parent.mkdir(parents=True, exist_ok=True)
         torch.save(self.net.state_dict(), path)
 
+    def load(self, path: Path, train: pl.DataFrame, n_users: int, n_items: int) -> None:
+        """Use a saved network instead of training (train is still needed for each user's history)."""
+        self.n_items = n_items
+        self._build_sequences(train, n_users)
+        self.net = SASRecNet(n_items, self.max_len, self.dim, self.n_layers, self.n_heads, self.dropout).to(DEVICE)
+        self.net.load_state_dict(torch.load(path, map_location=DEVICE))
+
 
 def train_on_validation(epochs: int, max_train_users: int | None = None, val_users: int = TUNE_USERS) -> pl.DataFrame:
     """Train on the val stage and score a validation sample after every epoch, to choose the epoch count."""
