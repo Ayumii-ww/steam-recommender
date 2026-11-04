@@ -23,3 +23,6 @@ CLAUDE.md
 
 # R
 .Rhistory
+
+# claude code local settings
+.claude/

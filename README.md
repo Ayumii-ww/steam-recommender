@@ -6,6 +6,15 @@ Built on 41 million Steam reviews from 13.8 million users. Six approaches are co
 
 ![Test results](docs/figures/leaderboard.png)
 
+## Try it
+
+A small web demo (Gradio) lets you pick games you have played, in order, and a date, and shows three top-10 lists: your taste (SASRec), taste + trending (the best model) and trending only. For example, Dark Souls III → Sekiro on 1 March 2022 puts Elden Ring, released four days earlier, first.
+
+```bash
+python app/build_assets.py   # once: builds small demo files from the processed data (~1 min)
+python app/app.py            # then open http://localhost:7860
+```
+
 ## Key findings
 
 1. **Timing explains a large part of what people review next.** Recommending the games most reviewed *yesterday* puts the user's next game in the top 10 for 17.6% of users. It knows nothing about the user, yet it beats every model that ignores time. All-time popularity, the usual baseline, reaches only 3.4%, so comparing against it alone would overstate the value of personal models by about 5×.
@@ -115,6 +124,7 @@ Run each step from the project folder. Times are on the 8 GB Mac.
 | ALS (tune + test) | `python -m src.als` | ~4 h |
 | SASRec (epoch curve + test) | `python -m src.sasrec --epochs 10` | ~4 h |
 | SASRec + trending (needs saved SASRec) | `python -m src.trend_hybrid` | ~2 h |
+| Demo app files (needs saved SASRec) | `python app/build_assets.py` | ~1 min |
 
 Every model writes its test scores to `results/results.csv` and its tuning table to `results/*_tuning.csv`. `notebooks/02_results.ipynb` turns these into the tables and charts above.
 
@@ -127,6 +137,7 @@ Every model writes its test scores to `results/results.csv` and its tuning table
 │   ├── 01_eda.ipynb     data exploration
 │   └── 02_results.ipynb results and tuning charts
 ├── src/                 data preparation, models and shared evaluation
+├── app/                 Gradio demo
 ├── results/             test scores and tuning tables
 ├── docs/                references and figures
 └── requirement.txt
@@ -136,7 +147,7 @@ Every model writes its test scores to `results/results.csv` and its tuning table
 
 - **New games (cold start):** a hybrid that uses game tags and descriptions to recommend games with few or no reviews, evaluated by hiding the reviews of the newest games. Data for games released after 2022 would come from the Steam store API.
 - **Unreviewed games:** test on the UCSD Steam dataset whether games a user owns but never reviewed improve recommendations.
-- **Demo app** with Gradio.
+- **Public demo** on Hugging Face Spaces.
 
 ## References
 

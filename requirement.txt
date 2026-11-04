@@ -12,3 +12,5 @@ tqdm
 kaggle
 jupyter
 ipykernel
+gradio
+requests
