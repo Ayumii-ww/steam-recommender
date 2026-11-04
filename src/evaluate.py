@@ -14,6 +14,9 @@ Scores are reported for four groups:
 Every model must provide:
   fit(train: pl.DataFrame, n_users: int, n_items: int) -> None
   score(user_idx: np.ndarray, history: scipy.sparse.csr_matrix) -> np.ndarray of shape (len(user_idx), n_items)
+Optional:
+  set_recommendation_time(times: pl.DataFrame with user_idx, date) -> None
+      called before scoring with the date of each hidden review (the moment we recommend)
 """
 
 import json
@@ -65,7 +68,7 @@ def load_eval_data(stage: str) -> EvalData:
     train = df.filter(pl.col("split").is_in(learn_splits)).select(
         "user_idx", "item_idx", "date", "is_recommended", "hours"
     )
-    targets = df.filter(pl.col("split") == stage).select("user_idx", "item_idx", "is_recommended", "user_group")
+    targets = df.filter(pl.col("split") == stage).select("user_idx", "item_idx", "date", "is_recommended", "user_group")
     del df
 
     history = sp.csr_matrix(
@@ -101,6 +104,10 @@ def evaluate(model, data: EvalData, max_users: int | None = None, seed: int = 42
     targets = data.targets
     if max_users is not None and targets.height > max_users:
         targets = targets.sample(n=max_users, seed=seed)
+
+    # Time-aware models may learn *when* each recommendation is made (never which game was reviewed)
+    if hasattr(model, "set_recommendation_time"):
+        model.set_recommendation_time(targets.select("user_idx", "date"))
 
     user_idx = targets["user_idx"].to_numpy()
     target_items = targets["item_idx"].to_numpy()
