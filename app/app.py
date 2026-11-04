@@ -94,7 +94,7 @@ def card(item: int, rank: int) -> str:
     ratio = g["positive_ratio"]
     mood = "good" if ratio is not None and ratio >= 80 else "mixed" if ratio is not None and ratio >= 60 else "poor"
     facts = " · ".join(str(x) for x in (g["year"], price) if x not in (None, ""))
-    score = f'<span class="score {mood}" title="{ratio}% of Steam reviews are positive">👍 {ratio}%</span>' if ratio is not None else ""
+    score = f'<span class="score {mood}" title="{ratio}% of Steam reviews are positive">{ratio}% positive</span>' if ratio is not None else ""
     return (
         f'<a class="card" href="{STORE.format(g["app_id"])}" target="_blank" rel="noopener">'
         f'<div class="thumb"><img src="{IMAGE.format(g["app_id"])}" alt="" loading="lazy"><span class="rank">{rank}</span></div>'
@@ -172,7 +172,7 @@ THEME = gr.themes.Soft(primary_hue="sky", neutral_hue="slate", font=gr.themes.Go
 
 with gr.Blocks(title="Steam game recommender") as demo:
     gr.Markdown(
-        "# 🎮 What will you play next?\n"
+        "# What will you play next?\n"
         "Pick games you have played **in the order you played them**, choose a date, and get 10 games you are "
         "likely to play next. Trained on 33M Steam reviews (2010–2022). "
         "[How it works and how well it scores →](https://github.com/Ayumii-ww/steam-recommender)",
@@ -202,7 +202,7 @@ with gr.Blocks(title="Steam game recommender") as demo:
     )
     strip.render()
     with gr.Tabs():
-        with gr.Tab("⭐ Taste + trending"):
+        with gr.Tab("Taste + trending (best)"):
             hybrid_view.render()
         with gr.Tab("Your taste only"):
             taste_view.render()

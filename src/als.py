@@ -5,9 +5,9 @@ dot product of the two lists: high when the user's tastes line up with what the 
 Hours played sets the *confidence* of each review: a 300-hour review pulls the sliders harder than a 1-hour one.
 
 Thumbs-down handling (tested during tuning):
-  "same"     = 👍 and 👎 reviews get the same confidence (only hours matter)
-  "half"     = 👎 reviews get half the confidence of a 👍 with the same hours
-  "drop"     = 👎 reviews are left out of training entirely (thumbs-up only)
+  "same"     = thumbs-up and thumbs-down reviews get the same confidence (only hours matter)
+  "half"     = thumbs-down reviews get half the confidence of a thumbs-up with the same hours
+  "drop"     = thumbs-down reviews are left out of training entirely (thumbs-up only)
 
 Run from the project root:  .venv/bin/python -m src.als            (tune on validation, then final test)
                             .venv/bin/python -m src.als --test-only --factors 64 --negatives half
@@ -97,7 +97,7 @@ class ALSModel:
 
 
 def tune() -> pl.DataFrame:
-    """Two rounds on a validation sample: first how to treat 👎, then the main ALS settings one at a time."""
+    """Two rounds on a validation sample: first how to treat thumbs-down, then the main ALS settings one at a time."""
     print(f"Loading validation data (tuning on {TUNE_USERS:,} users)...")
     data = load_eval_data("val")
     rows = []
